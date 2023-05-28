@@ -22,7 +22,7 @@ class StepBuilder extends StatelessWidget {
   const StepBuilder({
     required this.child,
     this.layout = StepLayout.stack,
-    this.childAlignment = Alignment.center,
+    this.childAlignment = Alignment.topCenter,
     this.padding,
     this.shouldStepForward,
     super.key,
@@ -91,7 +91,7 @@ class FormStepBuilder extends StatelessWidget {
   const FormStepBuilder({
     required this.child,
     this.layout = StepLayout.stack,
-    this.childAlignment = Alignment.center,
+    this.childAlignment = Alignment.topCenter,
     this.padding,
     super.key,
   });
