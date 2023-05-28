@@ -144,7 +144,7 @@ class _StepperIndicator extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isCompleted
-                          ? options.completedStepColor ?? Colors.green
+                          ? options.completedStepColor ?? Theme.of(context).colorScheme.primary
                           : isCurrent
                               ? options.activeStepColor ?? Theme.of(context).colorScheme.primary
                               : options.stepColor ?? Colors.grey[400],

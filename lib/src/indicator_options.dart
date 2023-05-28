@@ -14,7 +14,7 @@ class IndicatorOptions {
   /// Step Color when active, default to [ColorScheme.primary]
   final Color? activeStepColor;
 
-  /// Step Color when completed, default to [Colors.green]
+  /// Step Color when completed, default to [ColorScheme.primary]
   final Color? completedStepColor;
 
   /// default Step Color, default to [Colors.grey[400]]
