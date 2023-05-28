@@ -1,4 +1,5 @@
 import 'package:fine_stepper/src/fine_stepper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// {@template StepperControls}
@@ -39,7 +40,7 @@ class StepperControls extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            if (shouldStepForward?.call() ?? true) {
+            if ((shouldStepForward?.call() ?? true) && !controller.finishing) {
               FineStepper.of(context).stepForward();
             }
           },
@@ -50,11 +51,14 @@ class StepperControls extends StatelessWidget {
           child: controller.isLastStep
               ? Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    SizedBox(width: 10),
-                    Flexible(child: Text('Finish')),
-                    SizedBox(width: 5),
-                    Icon(Icons.done),
+                  children: [
+                    const SizedBox(width: 10),
+                    const Flexible(child: Text('Finish')),
+                    const SizedBox(width: 5),
+                    if (controller.finishing) //
+                      const CupertinoActivityIndicator()
+                    else
+                      const Icon(Icons.done)
                   ],
                 )
               : Row(

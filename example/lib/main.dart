@@ -14,6 +14,7 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(),
         body: FineStepper(
+          onFinish: () => Future.delayed(const Duration(seconds: 2)),
           steps: [
             StepItem(
               builder: (context) => StepBuilder(

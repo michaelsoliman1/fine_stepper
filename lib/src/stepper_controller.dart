@@ -1,22 +1,59 @@
 import 'package:flutter/material.dart';
 
-class StepperController extends ValueNotifier<int> {
+@immutable
+class StepperState {
+  const StepperState({
+    required this.currentStepIndex,
+    required this.finishing,
+  });
+
+  const StepperState.initial()
+      : currentStepIndex = 0,
+        finishing = false;
+
+  final int currentStepIndex;
+  final bool finishing;
+
+  @override
+  bool operator ==(covariant StepperState other) {
+    if (identical(this, other)) return true;
+
+    return other.currentStepIndex == currentStepIndex && other.finishing == finishing;
+  }
+
+  @override
+  int get hashCode => currentStepIndex.hashCode ^ finishing.hashCode;
+
+  StepperState copyWith({
+    int? currentStepIndex,
+    bool? finishing,
+  }) {
+    return StepperState(
+      currentStepIndex: currentStepIndex ?? this.currentStepIndex,
+      finishing: finishing ?? this.finishing,
+    );
+  }
+}
+
+class StepperController extends ValueNotifier<StepperState> {
   StepperController({
     required this.stepCount,
     this.onFinish,
-  }) : super(0);
+  }) : super(const StepperState.initial());
 
-  final VoidCallback? onFinish;
+  final Future<void> Function()? onFinish;
 
   final scrollController = ScrollController();
 
   final int stepCount;
 
-  int get stepIndex => value;
-  set stepIndex(int index) => value = index;
+  int get stepIndex => value.currentStepIndex;
+  set stepIndex(int index) => value = value.copyWith(currentStepIndex: index);
 
   bool get isFirstStep => stepIndex != 0;
   bool get isLastStep => stepIndex == stepCount - 1;
+
+  bool get finishing => value.finishing;
 
   void stepBack() {
     if (stepIndex == 0) return;
@@ -24,9 +61,11 @@ class StepperController extends ValueNotifier<int> {
     _animateToCurrentStep();
   }
 
-  void stepForward({dynamic arg}) {
+  Future<void> stepForward() async {
     if (isLastStep) {
-      onFinish?.call();
+      value = value.copyWith(finishing: true);
+      await (onFinish?.call() ?? Future.value());
+      value = value.copyWith(finishing: false);
       return;
     }
 

@@ -24,7 +24,7 @@ class FineStepper extends StatefulWidget {
   });
 
   final List<StepItem> steps;
-  final VoidCallback? onFinish;
+  final Future<void> Function()? onFinish;
 
   final IndicatorOptions indicatorOptions;
 
@@ -82,7 +82,8 @@ class _FineStepperState extends State<FineStepper> {
       notifier: controller,
       child: ValueListenableBuilder(
         valueListenable: controller,
-        builder: (context, currentStepIndex, __) {
+        builder: (context, state, __) {
+          final currentStepIndex = state.currentStepIndex;
           return DismissFocusOverlay(
             child: Column(
               children: [
