@@ -134,48 +134,42 @@ class _StepperIndicator extends StatelessWidget {
           final isCurrent = index == currentStepIndex;
           final isPrev = index == currentStepIndex - 1;
 
-          return Column(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: isPrev ? controller.stepBack : null,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: isCompleted
-                          ? options.completedStepColor ?? Theme.of(context).colorScheme.primary
-                          : isCurrent
-                              ? options.activeStepColor ?? Theme.of(context).colorScheme.primary
-                              : options.stepColor ?? Colors.grey[400],
-                    ),
-                    child: AnimatedCrossFade(
-                      firstChild: Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: Icon(
-                          Icons.done,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                      ),
-                      secondChild: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          '${index + 1}',
-                          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                        ),
-                      ),
-                      firstCurve: const Interval(0, 0.6, curve: Curves.fastOutSlowIn),
-                      secondCurve: const Interval(0.4, 1, curve: Curves.fastOutSlowIn),
-                      crossFadeState: isCompleted //
-                          ? CrossFadeState.showFirst
-                          : CrossFadeState.showSecond,
-                      duration: const Duration(milliseconds: 200),
-                    ),
+          return GestureDetector(
+            onTap: isPrev ? controller.stepBack : null,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isCompleted
+                    ? options.completedStepColor ?? Theme.of(context).colorScheme.primary
+                    : isCurrent
+                        ? options.activeStepColor ?? Theme.of(context).colorScheme.primary
+                        : options.stepColor ?? Colors.grey[400],
+              ),
+              child: AnimatedCrossFade(
+                firstChild: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Icon(
+                    Icons.done,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
+                secondChild: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text(
+                    '${index + 1}',
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                ),
+                firstCurve: const Interval(0, 0.6, curve: Curves.fastOutSlowIn),
+                secondCurve: const Interval(0.4, 1, curve: Curves.fastOutSlowIn),
+                crossFadeState: isCompleted //
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 200),
               ),
-            ],
+            ),
           );
         },
       ),

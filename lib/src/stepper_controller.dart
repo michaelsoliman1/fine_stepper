@@ -41,26 +41,45 @@ class StepperController extends ValueNotifier<StepperState> {
     this.onFinish,
   }) : super(const StepperState.initial());
 
+  final int stepCount;
+
   final Future<void> Function()? onFinish;
 
   final scrollController = ScrollController();
 
-  final int stepCount;
-
+  /// Current Step Index
   int get stepIndex => value.currentStepIndex;
+
+  /// Update current step Index
   set stepIndex(int index) => value = value.copyWith(currentStepIndex: index);
 
-  bool get isFirstStep => stepIndex != 0;
+  /// Check if this is the first step
+  bool get isFirstStep => stepIndex == 0;
+
+  /// Check if this is the last step
   bool get isLastStep => stepIndex == stepCount - 1;
 
+  /// Check if the stepper is finishing
+  /// i.e it the last step and finish is pressed
   bool get finishing => value.finishing;
 
+  /// Make a step back
+  ///
+  /// if [isFirstStep] is true, then it will do nothing
+  ///
+  /// this will animate to the current step
   void stepBack() {
-    if (stepIndex == 0) return;
+    if (isFirstStep) return;
     stepIndex = stepIndex - 1;
     _animateToCurrentStep();
   }
 
+  /// Make a step forward
+  ///
+  /// if [isLastStep] is true, then it will update [finishing] flag to be true
+  /// and call [onFinish], if passed.
+  ///
+  /// this will animate to the current step
   Future<void> stepForward() async {
     if (isLastStep) {
       value = value.copyWith(finishing: true);
@@ -73,6 +92,9 @@ class StepperController extends ValueNotifier<StepperState> {
     _animateToCurrentStep();
   }
 
+  /// Handle when a step is tapped
+  ///
+  /// for now, only a the previous step can be navigated to
   void onStepTapped(int index) {
     if (stepIndex - index == 1) {
       stepBack();

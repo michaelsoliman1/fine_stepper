@@ -27,7 +27,7 @@ class StepperControls extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton(
-          onPressed: controller.isFirstStep ? controller.stepBack : null,
+          onPressed: controller.isFirstStep ? null : controller.stepBack,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: const [
