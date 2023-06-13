@@ -13,13 +13,22 @@ Simple api for creating and managing steps flows (only supports horizontal steps
 
 ## Features 
 
-- control from any where down the widget tree with `FineStepper.of`
+- Control from any where down the widget tree with `FineStepper.of`
+- Fully Customizable `StepBuilder` that adds `StepperControls` out of the box. 
+  - `FormStepBuilder` that adds form functionalty to validate a form before stepping forward
 
 
 ## Installation
 
-Add `fine_stepper: ^0.1.0` to your `pubspec.yaml` dependencies. And import it:
+Add `fine_stepper` to your `pubspec.yaml` dependencies.
+```
+fine_stepper:
+  git:
+    url: https://github.com/michaelsoliman1/fine_stepper.git
+```
 
+
+Import it:
 ```dart
 import 'package:fine_stepper/fine_stepper.dart';
 ```
