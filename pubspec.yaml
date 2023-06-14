@@ -1,6 +1,6 @@
 name: fine_stepper
 description: A horizontal stepper that does the job just fine
-version: 0.1.0
+version: 0.1.0+1
 repository: https://github.com/michaelsoliman1/fine_stepper
 issue_tracker: https://github.com/michaelsoliman1/fine_stepper/issues
 
