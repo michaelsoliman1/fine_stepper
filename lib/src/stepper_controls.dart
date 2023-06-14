@@ -40,7 +40,7 @@ class StepperControls extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            if ((shouldStepForward?.call() ?? true) && !controller.finishing) {
+            if (shouldStepForward?.call() ?? true) {
               FineStepper.of(context).stepForward();
             }
           },

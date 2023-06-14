@@ -21,7 +21,7 @@ class FineStepper extends StatefulWidget {
     this.onFinish,
     this.indicatorOptions = const IndicatorOptions(),
     super.key,
-  });
+  }) : assert(steps.length != 0, 'Steps cannot be empty');
 
   final List<StepItem> steps;
   final Future<void> Function()? onFinish;

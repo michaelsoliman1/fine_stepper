@@ -79,8 +79,12 @@ class StepperController extends ValueNotifier<StepperState> {
   /// if [isLastStep] is true, then it will update [finishing] flag to be true
   /// and call [onFinish], if passed.
   ///
+  /// if [finishing] is true, it will do nothing
+  ///
   /// this will animate to the current step
   Future<void> stepForward() async {
+    if (finishing) return;
+
     if (isLastStep) {
       value = value.copyWith(finishing: true);
       await (onFinish?.call() ?? Future.value());
