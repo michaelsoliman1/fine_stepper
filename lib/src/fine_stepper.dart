@@ -1,8 +1,9 @@
 import 'package:fine_stepper/src/helper_widgets/dismiss_focus_overlay.dart';
 import 'package:fine_stepper/src/indicator_options.dart';
 import 'package:fine_stepper/src/step_item.dart';
-import 'package:fine_stepper/src/stepper_controller.dart';
 import 'package:flutter/material.dart';
+
+part 'stepper_controller.dart';
 
 class _StepperProvider extends InheritedNotifier<StepperController> {
   const _StepperProvider({
@@ -23,9 +24,13 @@ class FineStepper extends StatefulWidget {
     super.key,
   }) : assert(steps.length != 0, 'Steps cannot be empty');
 
+  /// List of [StepItem] to build at each step
   final List<StepItem> steps;
+
+  /// {@macro StepperController.onFinish}
   final Future<void> Function()? onFinish;
 
+  /// Options for the stepper indicator
   final IndicatorOptions indicatorOptions;
 
   /// Get the closest [StepperController] in the widget tree
@@ -118,7 +123,7 @@ class _StepperIndicator extends StatelessWidget {
     return SizedBox(
       height: 80,
       child: ListView.separated(
-        controller: controller.scrollController,
+        controller: controller._scrollController,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: controller.stepCount,
         scrollDirection: Axis.horizontal,

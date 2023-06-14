@@ -10,7 +10,12 @@ import 'package:flutter/material.dart';
 /// when [StepLayout.stack], step content will take the available height,
 /// and controls will be stacked on top of the content, aligned to bottomCenter
 enum StepLayout {
+  /// step content and controls will be laid out in a column,
+  /// taking the minimum height
   column,
+
+  /// step content will take the available height,
+  /// and controls will be stacked on top of the content, aligned to bottomCenter
   stack,
 }
 
@@ -43,8 +48,14 @@ class StepBuilder extends StatelessWidget {
   /// {@endtemplate}
   final Alignment childAlignment;
 
+  /// {@template StepBuilder.padding}
+  /// The amount of space by which to inset the child.
+  /// {@endtemplate}
   final EdgeInsets? padding;
 
+  /// If we should step forward to the next step
+  ///
+  /// useful if you want to validate a form or check for some conditions before stepping forward
   final bool Function()? shouldStepForward;
 
   @override
@@ -105,6 +116,7 @@ class FormStepBuilder extends StatelessWidget {
   /// {@macro StepBuilder.childAlignment}
   final Alignment childAlignment;
 
+  /// {@macro StepBuilder.padding}
   final EdgeInsets? padding;
 
   @override

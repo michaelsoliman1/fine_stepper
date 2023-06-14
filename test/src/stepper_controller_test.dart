@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fine_stepper/src/stepper_controller.dart';
+import 'package:fine_stepper/fine_stepper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
