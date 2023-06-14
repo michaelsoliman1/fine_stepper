@@ -51,7 +51,13 @@ class StepperController extends ValueNotifier<StepperState> {
   int get stepIndex => value.currentStepIndex;
 
   /// Update current step Index
-  set stepIndex(int index) => value = value.copyWith(currentStepIndex: index);
+  set stepIndex(int index) {
+    assert(
+      index >= 0 && index < stepCount,
+      'Invalid Index, Index must be between 0 and [stepCount]',
+    );
+    value = value.copyWith(currentStepIndex: index);
+  }
 
   /// Check if this is the first step
   bool get isFirstStep => stepIndex == 0;
