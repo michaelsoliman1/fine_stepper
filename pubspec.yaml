@@ -1,7 +1,8 @@
 name: fine_stepper
-description: Just a fine Stepper
+description: A horizontal stepper that does the job just fine
 version: 0.1.0
-publish_to: none
+repository: https://github.com/michaelsoliman1/fine_stepper
+issue_tracker: https://github.com/michaelsoliman1/fine_stepper/issues
 
 environment:
   sdk: ">=2.19.2 <3.0.0"
