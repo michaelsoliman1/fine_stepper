@@ -22,9 +22,7 @@ Simple api for creating and managing steps flows (only supports horizontal steps
 
 Add `fine_stepper` to your `pubspec.yaml` dependencies.
 ```
-fine_stepper:
-  git:
-    url: https://github.com/michaelsoliman1/fine_stepper.git
+fine_stepper: ^0.1.0
 ```
 
 
