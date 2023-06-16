@@ -2,7 +2,6 @@
 
 ### A horizontal stepper that does the job just fine by offering easy to use apis to controll the stepper from any where down the widget tree
 
-
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 
@@ -41,8 +40,7 @@ FineStepper(
 
 which gives the child the available height, and adds the controls on top of the it, aligned to bottom center.
 
-<img src="screenshots/step_builder_stack.png" width="300"/>
-
+<img width="342" alt="step_builder_stack" src="https://github.com/michaelsoliman1/fine_stepper/assets/40867495/90498e91-b818-49a4-af4c-d2bd56f11867">
 #### Example
 ```dart
 StepBuilder(
@@ -72,7 +70,7 @@ StepBuilder(
 
 which gives the child the minium height it needs, and adds the controls after it
 
-<img src="screenshots/step_builder_column.png" width="300"/>
+<img width="342" alt="step_builder_column" src="https://github.com/michaelsoliman1/fine_stepper/assets/40867495/4b2ac7f2-0ced-48ad-a713-e078b955f9a2">
 
 #### Example
 ```dart
