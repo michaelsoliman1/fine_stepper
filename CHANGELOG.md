@@ -1,3 +1,7 @@
+# 0.2.0+1
+
+* Fix screenshots link in README
+
 # 0.2.0
 - refactor: rename `StepBuilder.padding` to `StepBuilder.controlsPadding`
 - fix: back button background color to be not transparent 
