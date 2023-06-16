@@ -28,7 +28,7 @@ class StepBuilder extends StatelessWidget {
     required this.child,
     this.layout = StepLayout.stack,
     this.childAlignment = Alignment.topCenter,
-    this.padding,
+    this.controlsPadding,
     this.shouldStepForward,
     super.key,
   });
@@ -48,10 +48,12 @@ class StepBuilder extends StatelessWidget {
   /// {@endtemplate}
   final Alignment childAlignment;
 
-  /// {@template StepBuilder.padding}
-  /// The amount of space by which to inset the child.
+  /// {@template StepBuilder.controlsPadding}
+  /// Controls padding
+  ///
+  /// defaults to `EdgeInsets.all(16)`
   /// {@endtemplate}
-  final EdgeInsets? padding;
+  final EdgeInsets? controlsPadding;
 
   /// If we should step forward to the next step
   ///
@@ -71,7 +73,7 @@ class StepBuilder extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: padding ?? const EdgeInsets.all(16),
+                padding: controlsPadding ?? const EdgeInsets.all(16),
                 child: StepperControls(shouldStepForward: shouldStepForward),
               ),
             ),
@@ -84,7 +86,7 @@ class StepBuilder extends StatelessWidget {
             children: [
               child,
               Padding(
-                padding: padding ?? const EdgeInsets.all(16),
+                padding: controlsPadding ?? const EdgeInsets.all(16),
                 child: StepperControls(shouldStepForward: shouldStepForward),
               ),
             ],
@@ -103,7 +105,7 @@ class FormStepBuilder extends StatelessWidget {
     required this.child,
     this.layout = StepLayout.stack,
     this.childAlignment = Alignment.topCenter,
-    this.padding,
+    this.controlsPadding,
     super.key,
   });
 
@@ -116,8 +118,8 @@ class FormStepBuilder extends StatelessWidget {
   /// {@macro StepBuilder.childAlignment}
   final Alignment childAlignment;
 
-  /// {@macro StepBuilder.padding}
-  final EdgeInsets? padding;
+  /// {@macro StepBuilder.controlsPadding}
+  final EdgeInsets? controlsPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +129,7 @@ class FormStepBuilder extends StatelessWidget {
           childAlignment: childAlignment,
           layout: layout,
           shouldStepForward: validateAndSaveForm,
-          padding: padding,
+          controlsPadding: controlsPadding,
           child: child,
         );
       },

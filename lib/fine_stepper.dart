@@ -1,4 +1,4 @@
-/// Fine Stepper Librart
+/// Fine Stepper Library
 library fine_stepper;
 
 export 'src/fine_stepper.dart';

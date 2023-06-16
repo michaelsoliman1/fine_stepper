@@ -27,6 +27,7 @@ class StepperControls extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton(
+          style: ElevatedButton.styleFrom(disabledBackgroundColor: Colors.grey[400]),
           onPressed: controller.isFirstStep ? null : controller.stepBack,
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -56,7 +57,7 @@ class StepperControls extends StatelessWidget {
                     const Flexible(child: Text('Finish')),
                     const SizedBox(width: 5),
                     if (controller.finishing) //
-                      const CupertinoActivityIndicator()
+                      CupertinoActivityIndicator(color: Theme.of(context).colorScheme.onPrimary)
                     else
                       const Icon(Icons.done)
                   ],
