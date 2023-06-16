@@ -1,3 +1,7 @@
+# 0.2.0+2
+
+* Fix formatting in README
+
 # 0.2.0+1
 
 * Fix screenshots link in README
