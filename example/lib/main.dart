@@ -22,7 +22,6 @@ class MainApp extends StatelessWidget {
           steps: [
             StepItem(builder: buildColumnStep),
             StepItem(builder: buildStackStep),
-            StepItem(builder: buildStackStep),
             StepItem(builder: buildCustomStep),
             StepItem(builder: buildFormStep),
           ],
