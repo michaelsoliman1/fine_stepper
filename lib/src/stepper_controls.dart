@@ -29,9 +29,9 @@ class StepperControls extends StatelessWidget {
         ElevatedButton(
           style: ElevatedButton.styleFrom(disabledBackgroundColor: Colors.grey[400]),
           onPressed: controller.isFirstStep ? null : controller.stepBack,
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Icon(Icons.navigate_before),
               SizedBox(width: 5),
               Flexible(child: Text('Back')),
@@ -62,9 +62,9 @@ class StepperControls extends StatelessWidget {
                       const Icon(Icons.done)
                   ],
                 )
-              : Row(
+              : const Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
+                  children: [
                     SizedBox(width: 10),
                     Flexible(child: Text('Next')),
                     SizedBox(width: 5),
