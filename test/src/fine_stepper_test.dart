@@ -4,17 +4,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final steps = [
-    StepItem(
+    StepItem.icon(
       builder: (context) => StepBuilder(
         child: Text('Step ${FineStepper.of(context).stepIndex}'),
       ),
     ),
-    StepItem(
+    StepItem.icon(
       builder: (context) => StepBuilder(
         child: Text('Step ${FineStepper.of(context).stepIndex}'),
       ),
     ),
-    StepItem(
+    StepItem.icon(
       builder: (context) => StepBuilder(
         child: Text('Step ${FineStepper.of(context).stepIndex}'),
       ),
@@ -24,14 +24,14 @@ void main() {
   test(
     'FineSteppers fails when steps is empty',
     () {
-      expect(() => FineStepper(steps: const []), throwsAssertionError);
+      expect(() => FineStepper.icon(steps: const []), throwsAssertionError);
     },
   );
 
   testWidgets(
     'Steps forward',
     (tester) async {
-      await tester.pumpWidget(MaterialApp(home: FineStepper(steps: steps)));
+      await tester.pumpWidget(MaterialApp(home: FineStepper.icon(steps: steps)));
 
       expect(find.text('Step 0'), findsOneWidget);
 
@@ -51,7 +51,7 @@ void main() {
       var onFinishCalled = false;
       await tester.pumpWidget(
         MaterialApp(
-          home: FineStepper(
+          home: FineStepper.icon(
             onFinish: () async {
               onFinishCalled = true;
             },
@@ -78,7 +78,7 @@ void main() {
       var onFinishCalledCount = 0;
       await tester.pumpWidget(
         MaterialApp(
-          home: FineStepper(
+          home: FineStepper.icon(
             onFinish: () async {
               onFinishCalledCount++;
               await Future<void>.delayed(const Duration(seconds: 1));
@@ -108,7 +108,7 @@ void main() {
   testWidgets(
     'Cannot Step back on first step',
     (tester) async {
-      await tester.pumpWidget(MaterialApp(home: FineStepper(steps: steps)));
+      await tester.pumpWidget(MaterialApp(home: FineStepper.icon(steps: steps)));
       final BuildContext context = tester.element(find.byType(StepBuilder).last);
       final stepIndex = FineStepper.of(context).stepIndex;
       expect(stepIndex, 0);

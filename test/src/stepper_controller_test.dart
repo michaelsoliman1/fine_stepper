@@ -1,15 +1,20 @@
 import 'dart:async';
 
 import 'package:fine_stepper/fine_stepper.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const stepsCount = 3;
+  final steps = <StepItem>[
+    StepItem.icon(
+      builder: (context) => const Text('Step 1'),
+    ),
+  ];
 
   test(
     'Correct Initial State',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
+      final controller = StepperController(steps: steps);
       expect(controller.value, const StepperState.initial());
     },
   );
@@ -17,7 +22,7 @@ void main() {
   test(
     'Updates StepIndex with valid value',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
+      final controller = StepperController(steps: steps);
       expect(
         () => controller.stepIndex = 4,
         throwsAssertionError,
@@ -28,7 +33,7 @@ void main() {
   test(
     'isFirstStep return correct value',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
+      final controller = StepperController(steps: steps);
       expect(controller.isFirstStep, true);
     },
   );
@@ -36,8 +41,8 @@ void main() {
   test(
     'isLastStep return correct value',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
-      for (var i = 0; i < stepsCount; i++) {
+      final controller = StepperController(steps: steps);
+      for (var i = 0; i < steps.length; i++) {
         await controller.stepForward();
       }
       expect(controller.isLastStep, true);
@@ -47,11 +52,11 @@ void main() {
   test(
     'stepBack updates stepIndex correctly',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
-      for (var i = 0; i < stepsCount; i++) {
+      final controller = StepperController(steps: steps);
+      for (var i = 0; i < steps.length; i++) {
         await controller.stepForward();
       }
-      for (var i = stepsCount - 1; i >= 0; i--) {
+      for (var i = steps.length - 1; i >= 0; i--) {
         expect(controller.stepIndex, i);
         controller.stepBack();
       }
@@ -61,7 +66,7 @@ void main() {
   test(
     'stepBack does not decrement stepIndex when first step',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
+      final controller = StepperController(steps: steps);
 
       // ignore: cascade_invocations
       controller.stepBack();
@@ -72,8 +77,8 @@ void main() {
   test(
     'stepForward updates stepIndex correctly',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
-      for (var i = 0; i < stepsCount; i++) {
+      final controller = StepperController(steps: steps);
+      for (var i = 0; i < steps.length; i++) {
         expect(controller.stepIndex, i);
         await controller.stepForward();
       }
@@ -83,26 +88,26 @@ void main() {
   test(
     'stepForward does not increment stepIndex when last step',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
-      for (var i = 0; i < stepsCount; i++) {
+      final controller = StepperController(steps: steps);
+      for (var i = 0; i < steps.length; i++) {
         await controller.stepForward();
       }
-      expect(controller.stepIndex, stepsCount - 1);
+      expect(controller.stepIndex, steps.length - 1);
       await controller.stepForward();
-      expect(controller.stepIndex, stepsCount - 1);
+      expect(controller.stepIndex, steps.length - 1);
     },
   );
 
   test(
     'stepForward does not increment stepIndex when finishing is true',
     () async {
-      final controller = StepperController(stepCount: stepsCount);
-      for (var i = 0; i < stepsCount; i++) {
+      final controller = StepperController(steps: steps);
+      for (var i = 0; i < steps.length; i++) {
         await controller.stepForward();
       }
-      expect(controller.stepIndex, stepsCount - 1);
+      expect(controller.stepIndex, steps.length - 1);
       unawaited(controller.stepForward());
-      expect(controller.stepIndex, stepsCount - 1);
+      expect(controller.stepIndex, steps.length - 1);
     },
   );
 
@@ -111,13 +116,13 @@ void main() {
     () async {
       var onFinishCalledCount = 0;
       final controller = StepperController(
-        stepCount: stepsCount,
+        steps: steps,
         onFinish: () async {
           await Future<void>.delayed(const Duration(seconds: 1));
           onFinishCalledCount++;
         },
       );
-      for (var i = 0; i < stepsCount; i++) {
+      for (var i = 0; i < steps.length; i++) {
         await controller.stepForward();
       }
       expect(onFinishCalledCount, 1);
@@ -131,10 +136,10 @@ void main() {
     () async {
       var onFinishCalled = false;
       final controller = StepperController(
-        stepCount: stepsCount,
+        steps: steps,
         onFinish: () async => onFinishCalled = true,
       );
-      for (var i = 0; i < stepsCount; i++) {
+      for (var i = 0; i < steps.length; i++) {
         await controller.stepForward();
       }
       expect(onFinishCalled, true);

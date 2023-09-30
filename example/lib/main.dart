@@ -5,8 +5,63 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int index = 0;
+
+  Widget iconExample() {
+    return FineStepper.icon(
+      onFinish: () => Future.delayed(const Duration(seconds: 2)),
+      indicatorOptions: const IndicatorOptions(behavior: IndicatorBehavior.scroll),
+      steps: [
+        StepItem.icon(builder: buildColumnStep),
+        StepItem.icon(builder: buildStackStep),
+        StepItem.icon(builder: buildCustomStep),
+        StepItem.icon(builder: buildFormStep),
+        StepItem.icon(builder: buildFormStep),
+        StepItem.icon(builder: buildFormStep),
+      ],
+    );
+  }
+
+  Widget linearExample() {
+    return FineStepper.linear(
+      onFinish: () => Future.delayed(const Duration(seconds: 2)),
+      steps: [
+        StepItem.linear(
+          title: 'Step 1',
+          description: 'This is a desc',
+          builder: buildColumnStep,
+        ),
+        StepItem.linear(
+          title: 'Step 2',
+          builder: buildStackStep,
+        ),
+        StepItem.linear(
+          title: 'Step 3',
+          builder: buildStackStep,
+        ),
+        StepItem.linear(
+          title: 'Step 4',
+          builder: buildFormStep,
+        ),
+        StepItem.linear(
+          title: 'Step 5',
+          builder: buildFormStep,
+        ),
+        StepItem.linear(
+          title: 'Step 5',
+          builder: buildFormStep,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +72,32 @@ class MainApp extends StatelessWidget {
           centerTitle: true,
           title: const Text('Fine Stepper Example'),
         ),
-        body: FineStepper(
-          onFinish: () => Future.delayed(const Duration(seconds: 2)),
-          steps: [
-            StepItem(builder: buildColumnStep),
-            StepItem(builder: buildStackStep),
-            StepItem(builder: buildCustomStep),
-            StepItem(builder: buildFormStep),
+        body: Builder(
+          builder: (context) {
+            if (index == 0) {
+              return iconExample();
+            }
+            return linearExample();
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: index,
+          onTap: (value) => setState(() {
+            index = value;
+          }),
+          items: const [
+            BottomNavigationBarItem(
+              label: 'Icon',
+              icon: Icon(
+                Icons.image,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: 'Linear',
+              icon: Icon(
+                Icons.linear_scale,
+              ),
+            ),
           ],
         ),
       ),
