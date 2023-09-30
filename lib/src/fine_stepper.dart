@@ -4,6 +4,7 @@ import 'package:fine_stepper/src/step_item.dart';
 import 'package:flutter/material.dart';
 
 part 'stepper_controller.dart';
+part 'widgets/stepper_indicator.dart';
 
 class _StepperProvider extends InheritedNotifier<StepperController> {
   const _StepperProvider({
@@ -17,12 +18,32 @@ class _StepperProvider extends InheritedNotifier<StepperController> {
 /// {@endtemplate}
 class FineStepper extends StatefulWidget {
   /// {@macro FineStepper}
+  @Deprecated('Default constructor is deprecated, use FineStepper.icon instead')
   const FineStepper({
     required this.steps,
     this.onFinish,
     this.indicatorOptions = const IndicatorOptions(),
     super.key,
-  }) : assert(steps.length != 0, 'Steps cannot be empty');
+  })  : _indicatorType = IndicatorType.icon,
+        assert(steps.length != 0, 'Steps cannot be empty');
+
+  /// {@macro FineStepper}
+  const FineStepper.icon({
+    required this.steps,
+    this.onFinish,
+    this.indicatorOptions = const IndicatorOptions(),
+    super.key,
+  })  : _indicatorType = IndicatorType.icon,
+        assert(steps.length != 0, 'Steps cannot be empty');
+
+  /// {@macro FineStepper}
+  const FineStepper.linear({
+    required this.steps,
+    this.onFinish,
+    this.indicatorOptions = const IndicatorOptions(),
+    super.key,
+  })  : _indicatorType = IndicatorType.linear,
+        assert(steps.length != 0, 'Steps cannot be empty');
 
   /// List of [StepItem] to build at each step
   final List<StepItem> steps;
@@ -32,6 +53,9 @@ class FineStepper extends StatefulWidget {
 
   /// Options for the stepper indicator
   final IndicatorOptions indicatorOptions;
+
+  /// Type of the indicator
+  final IndicatorType _indicatorType;
 
   /// Get the closest [StepperController] in the widget tree
   static StepperController of(BuildContext context) {
@@ -43,7 +67,7 @@ class FineStepper extends StatefulWidget {
   static bool _debugCheckHasStepperController(BuildContext context) {
     // ignore: prefer_asserts_with_message
     assert(() {
-      if (context.dependOnInheritedWidgetOfExactType<MediaQuery>() == null) {
+      if (context.dependOnInheritedWidgetOfExactType<_StepperProvider>() == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary('No FineStepper widget ancestor found.'),
           ErrorDescription(
@@ -70,10 +94,22 @@ class FineStepper extends StatefulWidget {
 }
 
 class _FineStepperState extends State<FineStepper> {
-  late final controller = StepperController(
-    stepCount: widget.steps.length,
+  late StepperController controller = StepperController(
+    steps: widget.steps,
+    indicatorOptions: widget.indicatorOptions,
     onFinish: widget.onFinish,
   );
+
+  @override
+  void didUpdateWidget(covariant FineStepper oldWidget) {
+    final oldStepIndex = controller.stepIndex;
+    controller = StepperController(
+      steps: widget.steps,
+      indicatorOptions: widget.indicatorOptions,
+      onFinish: widget.onFinish,
+    )..stepIndex = oldStepIndex;
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   void dispose() {
@@ -83,100 +119,33 @@ class _FineStepperState extends State<FineStepper> {
 
   @override
   Widget build(BuildContext context) {
+    Widget buildIndicator() {
+      switch (widget._indicatorType) {
+        case IndicatorType.icon:
+          return const _StepperIndicator.icon();
+        case IndicatorType.linear:
+          return const _StepperIndicator.linear();
+        case IndicatorType.circular:
+          return const SizedBox();
+      }
+    }
+
     return _StepperProvider(
       notifier: controller,
-      child: ValueListenableBuilder(
-        valueListenable: controller,
-        builder: (context, state, __) {
-          final currentStepIndex = state.currentStepIndex;
-          return DismissFocusOverlay(
-            child: Column(
-              children: [
-                _StepperIndicator(
-                  currentStepIndex: currentStepIndex,
-                  options: widget.indicatorOptions,
-                ),
-                Expanded(
-                  child: widget.steps[currentStepIndex].builder(context),
-                ),
-              ],
+      child: DismissFocusOverlay(
+        child: Column(
+          children: [
+            buildIndicator(),
+            Builder(
+              // get the context that contains the controller
+              builder: (context) {
+                return Expanded(
+                  child: controller._activeStep.builder(context),
+                );
+              },
             ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _StepperIndicator extends StatelessWidget {
-  const _StepperIndicator({
-    required this.currentStepIndex,
-    this.options = const IndicatorOptions(),
-  });
-
-  final int currentStepIndex;
-  final IndicatorOptions options;
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = FineStepper.of(context);
-    return SizedBox(
-      height: 80,
-      child: ListView.separated(
-        controller: controller._scrollController,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: controller.stepCount,
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) => const SizedBox(
-          width: 50,
-          child: Divider(
-            indent: 4,
-            endIndent: 4,
-          ),
+          ],
         ),
-        itemBuilder: (context, index) {
-          final isCompleted = index < currentStepIndex;
-          final isCurrent = index == currentStepIndex;
-          final isPrev = index == currentStepIndex - 1;
-
-          return GestureDetector(
-            onTap: isPrev ? controller.stepBack : null,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isCompleted
-                    ? options.completedStepColor ?? Theme.of(context).colorScheme.primary
-                    : isCurrent
-                        ? options.activeStepColor ?? Theme.of(context).colorScheme.primary
-                        : options.stepColor ?? Colors.grey[400],
-              ),
-              child: AnimatedCrossFade(
-                firstChild: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Icon(
-                    Icons.done,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
-                secondChild: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    '${index + 1}',
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                ),
-                firstCurve: const Interval(0, 0.6, curve: Curves.fastOutSlowIn),
-                secondCurve: const Interval(0.4, 1, curve: Curves.fastOutSlowIn),
-                crossFadeState: isCompleted //
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: const Duration(milliseconds: 200),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

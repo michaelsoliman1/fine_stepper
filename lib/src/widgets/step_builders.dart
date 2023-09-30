@@ -1,5 +1,5 @@
 import 'package:fine_stepper/src/helper_widgets/form_builder.dart';
-import 'package:fine_stepper/src/stepper_controls.dart';
+import 'package:fine_stepper/src/widgets/stepper_controls.dart';
 import 'package:flutter/material.dart';
 
 /// Layout for [StepBuilder] and [StepperControls]

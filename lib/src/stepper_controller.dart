@@ -57,12 +57,11 @@ class StepperState {
 class StepperController extends ValueNotifier<StepperState> {
   /// {@macro StepperController}
   StepperController({
-    required this.stepCount,
+    required List<StepItem> steps,
+    this.indicatorOptions = const IndicatorOptions(),
     this.onFinish,
-  }) : super(const StepperState.initial());
-
-  /// Steps Count
-  final int stepCount;
+  })  : _steps = steps,
+        super(const StepperState.initial());
 
   /// {@template StepperController.onFinish}
   /// Optional callback to be executed on the last step
@@ -70,6 +69,17 @@ class StepperController extends ValueNotifier<StepperState> {
   /// [StepperState.finishing] will be true until this future resolves
   /// {@endtemplate}
   final Future<void> Function()? onFinish;
+
+  /// Step Items that holds info and builder for eact step
+  final List<StepItem> _steps;
+
+  /// Options for the stepper indicator for customization such as step color and text theme
+  final IndicatorOptions indicatorOptions;
+
+  StepItem get _activeStep => _steps[stepIndex];
+
+  /// Steps Count
+  int get stepCount => _steps.length;
 
   /// Current Step Index
   int get stepIndex => value.currentStepIndex;
@@ -142,6 +152,8 @@ class StepperController extends ValueNotifier<StepperState> {
   void _animateToCurrentStep() {
     // we don't need to animate
     if (stepCount <= 5) return;
+
+    if (!_scrollController.hasClients) return;
 
     _scrollController.animateTo(
       stepIndex * 40,
