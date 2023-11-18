@@ -52,7 +52,6 @@ class StepperState {
 ///
 /// if [onFinish] is passed, then its called on the last step,
 /// and [StepperState.finishing] will be true until this future resolves
-/// {@template StepperController}
 /// {@endtemplate}
 class StepperController extends ValueNotifier<StepperState> {
   /// {@macro StepperController}

@@ -1,3 +1,7 @@
+# 0.2.0+3
+
+* Fix pub score
+
 # 0.2.0+2
 
 * Fix formatting in README
