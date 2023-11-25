@@ -12,6 +12,8 @@
 
 Create an Icon Stepper by using `FineStepper.icon` constructor, with list of `StepItem.icon`s.
 
+<img width="400" alt="Screenshot 2023-11-25 at 3 04 47 PM" src="https://github.com/michaelsoliman1/fine_stepper/assets/40867495/061ec21b-8fa4-4860-ab55-92c989228fc3">
+
 ```dart
 FineStepper.icon(
   steps: [
@@ -37,6 +39,8 @@ FineStepper.icon(
 ## Linear Stepper
 
 Similarly, for creating a Linear Stepper, Use the `FineStepper.linear` constructor, with list of `StepItem.linear`s. 
+
+<img width="400" alt="Screenshot 2023-11-25 at 3 05 03 PM" src="https://github.com/michaelsoliman1/fine_stepper/assets/40867495/5fac9949-f9aa-4f2d-9ee4-b2daca99762a">
 
 ```dart
 FineStepper.linear(
