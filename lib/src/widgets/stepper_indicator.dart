@@ -7,9 +7,6 @@ enum IndicatorType {
 
   /// Linear Indicator
   linear,
-
-  ///
-  circular,
 }
 
 abstract class _StepperIndicator extends StatelessWidget {
@@ -40,7 +37,7 @@ class _StepperIconIndicator extends _StepperIndicator {
         itemCount: controller.stepCount,
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => SizedBox(
-          width: options.behavior == IndicatorBehavior.fit ? separatorWidth : 60,
+          width: options.scrollable ? 60 : separatorWidth,
           child: const Divider(
             indent: 4,
             endIndent: 4,

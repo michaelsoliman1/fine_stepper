@@ -117,19 +117,17 @@ class _FineStepperState extends State<FineStepper> {
     super.dispose();
   }
 
+  Widget buildIndicator() {
+    switch (widget._indicatorType) {
+      case IndicatorType.icon:
+        return const _StepperIndicator.icon();
+      case IndicatorType.linear:
+        return const _StepperIndicator.linear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget buildIndicator() {
-      switch (widget._indicatorType) {
-        case IndicatorType.icon:
-          return const _StepperIndicator.icon();
-        case IndicatorType.linear:
-          return const _StepperIndicator.linear();
-        case IndicatorType.circular:
-          return const SizedBox();
-      }
-    }
-
     return _StepperProvider(
       notifier: controller,
       child: DismissFocusOverlay(

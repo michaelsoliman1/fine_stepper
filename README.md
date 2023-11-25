@@ -1,29 +1,57 @@
 # Fine Stepper
 
-### A horizontal stepper that does the job just fine by offering easy to use apis to controll the stepper from any where down the widget tree
+### A horizontal stepper that does the job just fine by offering easy to use apis to control the stepper from any where down the widget tree
 
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 
 
 
-## Usage
-Create a `FineStepper` widget, with list of `StepItem`s.
+
+## Icon Stepper
+
+Create an Icon Stepper by using `FineStepper.icon` constructor, with list of `StepItem.icon`s.
 
 ```dart
-FineStepper(
+FineStepper.icon(
   steps: [
-    StepItem(
+    StepItem.icon(
       builder: (context) => StepBuilder(
         child: Text('Step ${FineStepper.of(context).stepIndex}'),
       ),
     ),
-    StepItem(
+    StepItem.icon(
       builder: (context) => StepBuilder(
         child: Text('Step ${FineStepper.of(context).stepIndex}'),
       ),
     ),
-    StepItem(
+    StepItem.icon(
+      builder: (context) => StepBuilder(
+        child: Text('Step ${FineStepper.of(context).stepIndex}'),
+      ),
+    )
+  ],
+),
+```
+
+## Linear Stepper
+
+Similarly, for creating a Linear Stepper, Use the `FineStepper.linear` constructor, with list of `StepItem.linear`s. 
+
+```dart
+FineStepper.linear(
+  steps: [
+    StepItem.linear(
+      builder: (context) => StepBuilder(
+        child: Text('Step ${FineStepper.of(context).stepIndex}'),
+      ),
+    ),
+    StepItem.linear(
+      builder: (context) => StepBuilder(
+        child: Text('Step ${FineStepper.of(context).stepIndex}'),
+      ),
+    ),
+    StepItem.linear(
       builder: (context) => StepBuilder(
         child: Text('Step ${FineStepper.of(context).stepIndex}'),
       ),
@@ -33,10 +61,10 @@ FineStepper(
 ```
 
 
-### StepBuilder
+## StepBuilder
 `StepBuilder` provides controls for navigating through steps with two layout options for the controls: 
 
-`StepLayout.stack` (default)
+### `StepLayout.stack` (default)
 
 which gives the child the available height, and adds the controls on top of the it, aligned to bottom center.
 
@@ -68,7 +96,7 @@ StepBuilder(
 );
 ```
 
-`StepLayout.column`
+### `StepLayout.column`
 
 which gives the child the minium height it needs, and adds the controls after it
 
@@ -163,6 +191,15 @@ final Color? completedStepColor;
 
 /// default Step Color, default to [Colors.grey[400]]
 final Color? stepColor;
+
+/// Indicator paddings
+final EdgeInsets padding;
+
+/// whether the indicator scrolls or not
+///
+/// has no effect when using FineStepper.linear
+final bool scrollable;
+
 ```
 
 

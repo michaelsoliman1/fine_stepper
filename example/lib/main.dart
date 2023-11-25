@@ -18,7 +18,7 @@ class _MainAppState extends State<MainApp> {
   Widget iconExample() {
     return FineStepper.icon(
       onFinish: () => Future.delayed(const Duration(seconds: 2)),
-      indicatorOptions: const IndicatorOptions(behavior: IndicatorBehavior.scroll),
+      indicatorOptions: const IndicatorOptions(scrollable: true),
       steps: [
         StepItem.icon(builder: buildColumnStep),
         StepItem.icon(builder: buildStackStep),

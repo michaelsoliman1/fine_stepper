@@ -1,20 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// {@template IndicatorBehavior}
-/// How the indicator behaves when the content is wider than the screen
-///
-/// **fit**: fit all indicator signs to the available width
-///
-/// **scroll**: give all indicator signs a fixed width and let it scroll
-/// {@endtemplate}
-enum IndicatorBehavior {
-  /// fit all indicator signs to the available width
-  fit,
-
-  /// give all indicator signs a fixed width and let it scroll
-  scroll,
-}
-
 /// {@template IndicatorOptions}
 /// Options for Stepper Indicator
 /// {@endtemplate}
@@ -25,7 +10,7 @@ class IndicatorOptions {
     this.completedStepColor,
     this.stepColor,
     this.padding = const EdgeInsets.all(16),
-    this.behavior = IndicatorBehavior.fit,
+    this.scrollable = false,
   });
 
   /// Step Color when active, default to [ColorScheme.primary]
@@ -40,8 +25,8 @@ class IndicatorOptions {
   /// Indicator paddings
   final EdgeInsets padding;
 
-  /// {@macro IndicatorBehavior}
+  /// whether the indicator scrolls or not
   ///
   /// has no effect when using FineStepper.linear
-  final IndicatorBehavior behavior;
+  final bool scrollable;
 }

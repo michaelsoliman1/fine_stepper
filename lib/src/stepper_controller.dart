@@ -87,7 +87,7 @@ class StepperController extends ValueNotifier<StepperState> {
   set stepIndex(int index) {
     assert(
       index >= 0 && index < stepCount,
-      'Invalid Index, Index must be between 0 and [stepCount]',
+      'Invalid Index, Index must be between 0 and [$stepCount]',
     );
     value = value.copyWith(currentStepIndex: index);
   }
